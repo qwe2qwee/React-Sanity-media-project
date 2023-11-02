@@ -1,4 +1,5 @@
-import React from "react";
+import { useEffect } from  "react";
+import { gapi } from "gapi-script"
 
 import GoogleLogin from "react-google-login";
 import { useNavigate } from "react-router-dom";
@@ -8,26 +9,43 @@ import logo from "../assets/logowhite.png";
 import { client } from "../client";
 
 const Login = () => {
-  const navigate = useNavigate()
+
+
+  const clientId = process.env.REACT_APP_GOOGLE_API_TOKEN
+
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: clientId,
+        scope: "",
+      });
+    };
+    gapi.load("client:auth2", initClient);
+  });
+
+
+
+
+  const navigate = useNavigate();
+
+
+
   const responseGoogle = (response) => {
     console.log(response);
 
     localStorage.setItem("user", JSON.stringify(response.profileObj));
-    console.log(response.profileObj);
-    const {name, googleId , imageUr} = response.profileObj
+    const { name, googleId, imageUr } = response.profileObj ;
 
     const doc = {
-      _id:googleId,
-      _type:'user',
-      userName:name,
-      image:imageUr,
+      _id: googleId,
+      _type: "user",
+      userName: name,
+      image: imageUr,
+    };
 
-    }
-
-    client.createIfNotExists(doc).then(()=> {
-      navigate('/',{replace:true})
-
-    })
+    client.createIfNotExists(doc).then(() => {
+      navigate("/", { replace: true });
+    });
   };
   return (
     <div className='flex justify-start items-center flex-col h-screen'>

@@ -6,6 +6,7 @@ export const client = createClient({
   dataset: 'production',
   apiVersion: '2021-11-16',
   useCdn: true,
+  ignoreBrowserTokenWarning: true,
   token: process.env.REACT_APP_SANITY_TOKEN,
 });
 
