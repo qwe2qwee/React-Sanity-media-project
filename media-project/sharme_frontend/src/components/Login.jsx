@@ -1,5 +1,5 @@
-import { useEffect } from  "react";
-import { gapi } from "gapi-script"
+import { useEffect } from "react";
+import { gapi } from "gapi-script";
 
 import GoogleLogin from "react-google-login";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +9,7 @@ import logo from "../assets/logowhite.png";
 import { client } from "../client";
 
 const Login = () => {
-
-
-  const clientId = process.env.REACT_APP_GOOGLE_API_TOKEN
+  const clientId = process.env.REACT_APP_GOOGLE_API_TOKEN;
 
   useEffect(() => {
     const initClient = () => {
@@ -23,26 +21,22 @@ const Login = () => {
     gapi.load("client:auth2", initClient);
   });
 
-
-
-
   const navigate = useNavigate();
 
-
-
-  const responseGoogle = (response) => {
-    console.log(response);
+  const responseGoogle = async (response) => {
+    console.log(response.profileObj);
 
     localStorage.setItem("user", JSON.stringify(response.profileObj));
-    const { name, googleId, imageUr } = response.profileObj ;
+     const { name, googleId,imageUrl}  = await response.profileObj;
 
     const doc = {
       _id: googleId,
       _type: "user",
       userName: name,
-      image: imageUr,
+      image: imageUrl,
     };
 
+    console.log(doc);
     client.createIfNotExists(doc).then(() => {
       navigate("/", { replace: true });
     });
