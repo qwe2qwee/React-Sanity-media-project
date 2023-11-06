@@ -27,7 +27,8 @@ const Login = () => {
     console.log(response.profileObj);
 
     localStorage.setItem("user", JSON.stringify(response.profileObj));
-     const { name, googleId,imageUrl}  = await response.profileObj;
+    const { name, googleId, imageUrl } = await response.profileObj;
+    
 
     const doc = {
       _id: googleId,
