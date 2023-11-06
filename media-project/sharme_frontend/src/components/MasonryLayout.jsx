@@ -13,7 +13,6 @@ const breakpointColumnsObj = {
 };
 
 const MasonryLayout = ({pins}) => {
-  console.log(pins);
   return (
     <div>
       <Masonry

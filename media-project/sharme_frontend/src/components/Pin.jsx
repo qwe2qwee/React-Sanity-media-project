@@ -7,7 +7,6 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
 import { fetchUser } from "../utils/fetchUser";
 const Pin = ({ pin }) => {
-  console.log(pin);
   const { postedBy, image, _id, destination } = pin;
   const [postHovered, setPostHovered] = useState(false);
   const navigate = useNavigate();
@@ -124,8 +123,16 @@ const Pin = ({ pin }) => {
         )}
       </div>
       <Link
-        to={`user-profile/${user?._id}`}
-        className=' flex gap-2 mt-2 items-center'> <img src={postedBy?.image} alt="postBy" className=" w-8 h-8 rounded-full object-cover"/></Link>
+        to={`user-profile/${postedBy?._id}`}
+        className=' flex gap-2 mt-2 items-center'>
+        {" "}
+        <img
+          src={postedBy?.image}
+          alt='postBy'
+          className=' w-8 h-8 rounded-full object-cover'
+        />
+        <p className=" font-semibold capitalize">{postedBy?.userName}</p>
+      </Link>
     </div>
   );
 };

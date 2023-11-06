@@ -24,7 +24,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const responseGoogle = async (response) => {
-    console.log(response.profileObj);
 
     localStorage.setItem("user", JSON.stringify(response.profileObj));
     const { name, googleId, imageUrl } = await response.profileObj;
@@ -36,8 +35,6 @@ const Login = () => {
       userName: name,
       image: imageUrl,
     };
-
-    console.log(doc);
     client.createIfNotExists(doc).then(() => {
       navigate("/", { replace: true });
     });
