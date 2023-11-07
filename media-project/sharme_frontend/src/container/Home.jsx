@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef , useCallback} from "react";
 import { HiMenu } from "react-icons/hi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, Route, Routes } from "react-router-dom";
@@ -7,23 +7,18 @@ import { userQuery } from "../utils/data";
 import Sidebar from "../components/Sidebar";
 import UserProfile from "../components/UserProfile";
 import Pins from "./Pins";
-import { client } from "../client";
+import { client, urlFor } from "../client";
 import logo from "../assets/logo.png";
 import { fetchUser } from "../utils/fetchUser";
 
 const Home = () => {
-  const [toggleSideBar, setToggleSideBar] = useState(false);
-
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const scrollRef = useRef(null);
-
+  const [toggleSideBar, setToggleSideBar] = useState(false);
   const userInfo = fetchUser();
-
-  const logoogoogle = userInfo?.imageUrl;
 
   useEffect(() => {
     const query = userQuery(userInfo?.googleId);
-
     client.fetch(query).then((data) => {
       setUser(data[0]);
     });
@@ -33,10 +28,15 @@ const Home = () => {
     scrollRef.current.scrollTo(0, 0);
   });
 
+  const imagee = useCallback(async (user) => {
+    const { image } = await user;
+    return image;
+  },[]);
+
   return (
     <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out'>
       <div className='hidden md:flex h-screen flex-initial'>
-        <Sidebar user={user && user} imgurl={logoogoogle} />
+        <Sidebar user={user && user} />
       </div>
       <div className='flex md:hidden flex-row'>
         <div className='p-2 w-full flex flex-row justify-between items-center shadow-md'>
@@ -50,7 +50,7 @@ const Home = () => {
           </Link>
           <Link to={`user-profile/${user?._id}`}>
             <img
-              src={logoogoogle}
+              src={`${imagee}`}
               alt='user-pic'
               className='w-9 h-9 rounded-full '
             />
@@ -73,10 +73,7 @@ const Home = () => {
       <div className='pb-2 flex-1 h-screen overflow-y-scroll' ref={scrollRef}>
         <Routes>
           <Route path='/user-profile/:userId' element={<UserProfile />} />
-          <Route
-            path='/*'
-            element={<Pins user={user && user} UserImg={logoogoogle} />}
-          />
+          <Route path='/*' element={<Pins user={user && user} />} />
         </Routes>
       </div>
     </div>

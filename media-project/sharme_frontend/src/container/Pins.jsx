@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Navbar, Feed, PinDetail, CreatePin, Search } from "../components";
 
-function Pins({ user, UserImg }) {
+function Pins({ user }) {
   const [searchTerm, setSearchTerm] = useState("");
   return (
     <div className='px-2 md:px-5'>
@@ -10,7 +10,6 @@ function Pins({ user, UserImg }) {
         <Navbar
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
-          UserImg={UserImg}
           user={user}
         />
       </div>

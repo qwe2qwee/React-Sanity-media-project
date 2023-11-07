@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { RiGomeFill, RiHomeFill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons";
@@ -18,10 +18,15 @@ const categories = [
   { name: "Other" },
 ];
 
-const Sidebar = ({ user, closeToggle , imgurl }) => {
+const Sidebar = ({ user, closeToggle }) => {
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
   };
+
+  const imagee = useCallback(async (user) => {
+    const { image } = await user;
+    return image;
+  }, []);
   return (
     <div className='flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollba'>
       <div className='flex flex-col'>
@@ -61,7 +66,7 @@ const Sidebar = ({ user, closeToggle , imgurl }) => {
           to={`user-profile/${user._id}`}
           className='flex my-5 mb-3 gap-2 p-2 items-center bg-white rounded-lg shadow-lg mx-3'>
           <img
-            src={imgurl}
+            src={user.image}
             className='w-10 h-10 rounded-full'
             alt='user-profile'
           />
