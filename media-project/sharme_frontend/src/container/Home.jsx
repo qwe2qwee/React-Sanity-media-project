@@ -12,6 +12,7 @@ import logo from "../assets/logo.png";
 import { fetchUser } from "../utils/fetchUser";
 
 const Home = () => {
+  console.log('rerender');
   const [user, setUser] = useState({});
   const scrollRef = useRef(null);
   const [toggleSideBar, setToggleSideBar] = useState(false);
@@ -50,7 +51,7 @@ const Home = () => {
           </Link>
           <Link to={`user-profile/${user?._id}`}>
             <img
-              src={`${imagee}`}
+              src={`${user?.image}`}
               alt='user-pic'
               className='w-9 h-9 rounded-full '
             />

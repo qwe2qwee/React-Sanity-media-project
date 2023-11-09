@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Navbar, Feed, PinDetail, CreatePin, Search } from "../components";
+
+const Navbar = React.lazy(() => import("../components/Navbar"));
+const Feed = React.lazy(() => import("../components/Feed"));
+const PinDetail = React.lazy(() => import("../components/PinDetail"));
+const CreatePin = React.lazy(() => import("../components/CreatePin"));
+const Search = React.lazy(() => import("../components/Search"));
 
 function Pins({ user }) {
   const [searchTerm, setSearchTerm] = useState("");
