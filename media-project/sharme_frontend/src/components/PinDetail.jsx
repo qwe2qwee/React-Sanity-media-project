@@ -35,6 +35,7 @@ const PinDetail = ({ user }) => {
 
   if (!pinDetail) return <Spinner message='Loading pin...' />;
 
+
   return (
     <>
       <div

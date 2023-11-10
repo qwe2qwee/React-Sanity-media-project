@@ -7,12 +7,11 @@ import { userQuery } from "../utils/data";
 import Sidebar from "../components/Sidebar";
 import UserProfile from "../components/UserProfile";
 import Pins from "./Pins";
-import { client, urlFor } from "../client";
+import { client} from "../client";
 import logo from "../assets/logo.png";
 import { fetchUser } from "../utils/fetchUser";
 
 const Home = () => {
-  console.log('rerender');
   const [user, setUser] = useState({});
   const scrollRef = useRef(null);
   const [toggleSideBar, setToggleSideBar] = useState(false);

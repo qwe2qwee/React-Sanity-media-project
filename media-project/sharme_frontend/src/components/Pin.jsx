@@ -51,11 +51,17 @@ const Pin = ({ pin }) => {
         className='relative  cursor-pointer w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out'
         onMouseEnter={() => setPostHovered(true)}
         onMouseLeave={() => setPostHovered(false)}
+        onTouchMove={() =>
+          setTimeout(() => {
+            setPostHovered(false);
+          }, 2000)
+        }
+        onTouchStart={() => setPostHovered(true)}
         onClick={() => navigate(`/pin-detail/${_id}`)}>
         <img
-          className=' rounded-lg w-full'
+          className='rounded-lg w-full'
           alt='user-pin'
-          src={urlFor(image).width(250).url()}
+          src={urlFor(image).url()}
         />
         {postHovered && (
           <div
@@ -114,7 +120,7 @@ const Pin = ({ pin }) => {
                     e.stopPropagation();
                     deletePin(_id);
                   }}
-                  className='bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none'>
+                  className='bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none '>
                   <AiTwotoneDelete />
                 </button>
               )}
@@ -131,7 +137,7 @@ const Pin = ({ pin }) => {
           alt='postBy'
           className=' w-8 h-8 rounded-full object-cover'
         />
-        <p className=" font-semibold capitalize">{postedBy?.userName}</p>
+        <p className=' font-semibold capitalize'>{postedBy?.userName}</p>
       </Link>
     </div>
   );

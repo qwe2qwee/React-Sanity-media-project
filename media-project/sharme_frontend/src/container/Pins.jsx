@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 const Navbar = React.lazy(() => import("../components/Navbar"));
 const Feed = React.lazy(() => import("../components/Feed"));
@@ -19,21 +20,23 @@ function Pins({ user }) {
         />
       </div>
       <div className='h-full'>
-        <Routes>
-          <Route path='/' element={<Feed />} />
-          <Route path='/category/:categoryId' element={<Feed />} />
-          <Route
-            path='/pin-detail/:pinId'
-            element={<PinDetail user={user} />}
-          />
-          <Route path='/Create-pin' element={<CreatePin user={user} />} />
-          <Route
-            path='/search'
-            element={
-              <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            }
-          />
-        </Routes>
+        <Suspense fallback={<Spinner message='Loding...' />}>
+          <Routes>
+            <Route path='/' element={<Feed />} />
+            <Route path='/category/:categoryId' element={<Feed />} />
+            <Route
+              path='/pin-detail/:pinId'
+              element={<PinDetail user={user} />}
+            />
+            <Route path='/Create-pin' element={<CreatePin user={user} />} />
+            <Route
+              path='/search'
+              element={
+                <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+              }
+            />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );

@@ -79,6 +79,11 @@ function CreatePin({ user }) {
     }
   };
 
+  if (!user) {
+    return <Spinner message='Loading profile...' />;
+  }
+
+
   return (
     <div className='flex flex-col justify-center items-center mt-5 lg:h-4/5'>
       {fields && (
